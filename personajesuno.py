@@ -1,0 +1,144 @@
+import random
+
+# Definir los personajes disponibles en Brawl Stars
+characters = [
+    "Shelly", "Nita", "Colt", "Bull", "Jessie", "Brock", "Dynamike", "Bo", "Tick", "8-Bit",
+    "Emz", "El Primo", "Barley", "Poco", "Rosa", "Rico", "Darryl", "Penny", "Carl", "Jacky",
+    "Piper", "Pam", "Frank", "Bibi", "Bea", "Mortis", "Tara", "Gene", "Max", "Mr. P",
+    "Spike", "Crow", "Leon", "Sandy", "Gale", "Surge", "Colette", "Lou", "Byron", "Sprout",
+    "Colonel Ruffs", "Stu", "Belle", "Squeak"
+]
+
+# Definir los atributos de cada personaje (salud, ataque, disparos por turno y superataque)
+character_stats = {
+    "Shelly": {"health": 7400, "attack": 600, "disparos_por_turno": 5, "superataque": 640, "max_super_usos": 3, "super_usos_restantes": 3},
+    "Nita": {"health": 8000, "attack": 1920, "disparos_por_turno": 1, "superataque": 800, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Colt": {"health": 5600, "attack": 720, "disparos_por_turno": 6, "superataque": 640, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Bull": {"health": 10000, "attack": 880, "disparos_por_turno": 5, "superataque": 1920, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Jessie": {"health": 6000, "attack": 2120, "disparos_por_turno": 1, "superataque": 520, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Brock": {"health": 4800, "attack": 2320, "disparos_por_turno": 1, "superataque": 2080, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Dynamike": {"health": 5600, "attack": 1600, "disparos_por_turno": 2, "superataque": 4400, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Bo": {"health": 7200, "attack": 1280, "disparos_por_turno": 3, "superataque": 2880, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Tick": {"health": 4400, "attack": 1280, "disparos_por_turno": 3, "superataque": 4000, "max_super_usos": 1, "super_usos_restantes": 1},
+    "8-Bit": {"health": 10000, "attack": 640, "disparos_por_turno": 6, "superataque": 864, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Emz": {"health": 7200, "attack": 1040, "disparos_por_turno": 1, "superataque": 480, "max_super_usos": 1, "super_usos_restantes": 1},
+    "El Primo": {"health": 12000, "attack": 760, "disparos_por_turno": 4, "superataque": 1920, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Barley": {"health": 4800, "attack": 1600, "disparos_por_turno": 1, "superataque": 1600, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Poco": {"health": 7400, "attack": 1520, "disparos_por_turno": 1, "superataque": 4200, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Rosa": {"health": 10000, "attack": 920, "disparos_por_turno": 3, "superataque": 2800, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Rico": {"health": 90, "attack": 13, "disparos_por_turno": 1, "superataque": 35, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Darryl": {"health": 150, "attack": 7, "disparos_por_turno": 1, "superataque": 30, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Penny": {"health": 90, "attack": 12, "disparos_por_turno": 251, "superataque": 40, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Carl": {"health": 120, "attack": 8, "disparos_por_turno": 1, "superataque": 45, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Jacky": {"health": 120, "attack": 9, "disparos_por_turno": 1, "superataque": 40, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Piper": {"health": 80, "attack": 12, "disparos_por_turno": 1, "superataque": 40, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Pam": {"health": 110, "attack": 8, "disparos_por_turno": 1, "superataque": 35, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Frank": {"health": 130, "attack": 7, "disparos_por_turno": 1, "superataque": 50, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Bibi": {"health": 110, "attack": 11, "disparos_por_turno": 1, "superataque": 35, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Bea": {"health": 80, "attack": 14, "disparos_por_turno": 1, "superataque": 40, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Mortis": {"health": 100, "attack": 11, "disparos_por_turno": 1, "superataque": 35, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Tara": {"health": 100, "attack": 10, "disparos_por_turno": 1, "superataque": 40, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Gene": {"health": 90, "attack": 12, "disparos_por_turno": 1, "superataque": 35, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Max": {"health": 80, "attack": 14, "disparos_por_turno": 1, "superataque": 45, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Mr. P": {"health": 110, "attack": 9, "disparos_por_turno": 1, "superataque": 40, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Spike": {"health": 90, "attack": 12, "disparos_por_turno": 1, "superataque": 40, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Crow": {"health": 80, "attack": 12, "disparos_por_turno": 1, "superataque": 40, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Leon": {"health": 80, "attack": 12, "disparos_por_turno": 1, "superataque": 35, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Sandy": {"health": 100, "attack": 10, "disparos_por_turno": 1, "superataque": 45, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Gale": {"health": 90, "attack": 12, "disparos_por_turno": 1, "superataque": 40, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Surge": {"health": 110, "attack": 9, "disparos_por_turno": 1, "superataque": 45, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Colette": {"health": 80, "attack": 14, "disparos_por_turno": 1, "superataque": 40, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Lou": {"health": 100, "attack": 10, "disparos_por_turno": 1, "superataque": 40, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Byron": {"health": 90, "attack": 12, "disparos_por_turno": 1, "superataque": 45, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Sprout": {"health": 110, "attack": 9, "disparos_por_turno": 1, "superataque": 40, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Colonel Ruffs": {"health": 110, "attack": 19, "disparos_por_turno": 1, "superataque": 35, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Stu": {"health": 90, "attack": 12, "disparos_por_turno": 1, "superataque": 45, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Belle": {"health": 80, "attack": 14, "disparos_por_turno": 1, "superataque": 40, "max_super_usos": 1, "super_usos_restantes": 1},
+    "Squeak": {"health": 100, "attack": 10, "disparos_por_turno": 1, "superataque": 45, "max_super_usos": 1, "super_usos_restantes": 1},
+}
+
+# Definir la función para el combate
+def combat(player, enemy):
+    player_health = character_stats[player]["health"]
+    enemy_health = character_stats[enemy]["health"]
+    player_attack = character_stats[player]["attack"]
+    enemy_attack = character_stats[enemy]["attack"]
+    player_superattack = character_stats[player]["superataque"]
+    enemy_superattack = character_stats[enemy]["superataque"]
+    player_shots = character_stats[player]["disparos_por_turno"]
+    enemy_shots = character_stats[enemy]["disparos_por_turno"]
+    player_super_usos_restantes = character_stats[player]["super_usos_restantes"]
+    player_max_super_usos = character_stats[player]["max_super_usos"]
+    
+    print(f"\n¡Comienza el combate entre {player} y {enemy}!")
+    
+    # Simular el combate
+    while player_health > 0 and enemy_health > 0:
+        # Turno del jugador
+        print(f"\n¡Es tu turno, {player}!")
+        print(f"Tu salud: {player_health}")
+        print(f"Salud del enemigo: {enemy_health}")
+        print("¿Qué acción deseas realizar?")
+        print("1. Atacar")
+        print("2. Usar Superataque")
+        print("3. Rendirse")
+        choice = input("Selecciona una opción: ")
+        
+        if choice == "1":
+            print("\n¡Atacas al enemigo!")
+            for _ in range(player_shots):
+                damage = random.randint(player_attack - 50, player_attack + 50)  # Randomizar el daño dentro de un rango
+                enemy_health -= damage
+                print(f"Infliges {damage} puntos de daño al enemigo.")
+                if enemy_health <= 0:
+                    break
+        elif choice == "2":
+            if player_super_usos_restantes > 0:
+                print(f"\n¡{player} usa su Superataque!")
+                enemy_health -= player_superattack
+                print(f"Infliges {player_superattack} puntos de daño al enemigo con tu Superataque.")
+                player_super_usos_restantes -= 1
+            else:
+                print("Ya has usado tu Superataque el máximo de veces permitidas este turno.")
+        elif choice == "3":
+            print("Te has rendido. ¡El enemigo te ha derrotado!")
+            return
+        else:
+            print("Opción inválida. Por favor, selecciona una acción válida.")
+        
+        # Turno del enemigo
+        print("\n¡Turno del enemigo!")
+        for _ in range(enemy_shots):
+            damage = random.randint(enemy_attack - 50, enemy_attack + 50)  # Randomizar el daño dentro de un rango
+            player_health -= damage
+            print(f"El enemigo te inflige {damage} puntos de daño.")
+            if player_health <= 0:
+                break
+    
+    # Determinar el resultado del combate
+    if player_health <= 0:
+        print("\n¡El enemigo te ha derrotado!")
+    elif enemy_health <= 0:
+        print("\n¡Has derrotado al enemigo!")
+
+# Función para seleccionar un personaje
+def select_character():
+    print("Elige tu personaje:")
+    for i, character in enumerate(characters):
+        print(f"{i + 1}. {character}")
+    choice = int(input("Selecciona un número: "))
+    return characters[choice - 1]
+
+# Juego principal
+def main():
+    print("¡Bienvenido a Brawl Stars Text Edition!")
+    player_character = select_character()
+    print(f"Has seleccionado a {player_character}. ¡Prepárate para la batalla!")
+
+    # Iniciar el combate
+    enemy = random.choice(characters)
+    combat(player_character, enemy)
+
+# Ejecutar el juego
+if __name__ == "__main__":
+    main()
