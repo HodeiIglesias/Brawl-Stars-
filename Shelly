@@ -1,0 +1,149 @@
+using System;
+
+namespace BrawlStarsSimulation
+{
+    public class Shelly
+    {
+        public int Health { get; private set; } = 5000;
+        private int ammo = 3;
+        private const int MaxAmmo = 3;
+        private const int ShootDamage = 300;
+        private const int SuperDamage = 1000;
+
+        // Nuevos atributos
+        private bool hasShield = false; // Gadget 1
+        private bool hasHealing = false; // Gadget 2
+        private bool fastReload = false; // Habilidad estelar 1
+        private bool extraDamage = false; // Habilidad estelar 2
+        private int hyperchargeLevel = 0; // Hipercarga
+        private const int MaxHypercharge = 5;
+        private int speedBoost = 0; // Refuerzos
+        private int damageBoost = 0;
+        private int healthBoost = 0;
+        private int reloadBoost = 0;
+        private int shieldBoost = 0;
+
+        public Shelly()
+        {
+            Console.WriteLine($"Shelly creada con {Health} de vida.");
+        }
+
+        public void Shoot()
+        {
+            if (ammo > 0)
+            {
+                ammo--;
+                int damage = ShootDamage + damageBoost;
+                if (extraDamage)
+                {
+                    damage += 100;
+                }
+                Console.WriteLine($"Shelly dispara causando {damage} de daño. Munición restante: {ammo}.");
+            }
+            else
+            {
+                Console.WriteLine("Shelly no tiene munición. Recargando...");
+                Reload();
+            }
+        }
+
+        public void SuperAttack()
+        {
+            int damage = SuperDamage + damageBoost;
+            Console.WriteLine($"Shelly usa su super ataque causando {damage} de daño.");
+        }
+
+        private void Reload()
+        {
+            ammo = MaxAmmo;
+            Console.WriteLine("Shelly ha recargado su munición.");
+        }
+
+        public void UseGadget(int gadgetNumber)
+        {
+            switch (gadgetNumber)
+            {
+                case 1:
+                    Console.WriteLine("Shelly usa su gadget: Escudo activado.");
+                    hasShield = true;
+                    break;
+                case 2:
+                    Console.WriteLine("Shelly usa su gadget: Curación activada.");
+                    hasHealing = true;
+                    Health += 500; // Curación de ejemplo
+                    break;
+                default:
+                    Console.WriteLine("Gadget no válido.");
+                    break;
+            }
+        }
+
+        public void ActivateStarPower(int starPowerNumber)
+        {
+            switch (starPowerNumber)
+            {
+                case 1:
+                    Console.WriteLine("Shelly activa su habilidad estelar: Recarga rápida.");
+                    fastReload = true;
+                    break;
+                case 2:
+                    Console.WriteLine("Shelly activa su habilidad estelar: Daño extra.");
+                    extraDamage = true;
+                    break;
+                default:
+                    Console.WriteLine("Habilidad estelar no válida.");
+                    break;
+            }
+        }
+
+        public void ApplyReinforcement(string reinforcementType, int value)
+        {
+            switch (reinforcementType)
+            {
+                case "speed":
+                    speedBoost += value;
+                    break;
+                case "damage":
+                    damageBoost += value;
+                    break;
+                case "health":
+                    healthBoost += value;
+                    Health += value;
+                    break;
+                case "reload":
+                    reloadBoost += value;
+                    break;
+                case "shield":
+                    shieldBoost += value;
+                    break;
+                default:
+                    Console.WriteLine("Tipo de refuerzo no válido.");
+                    break;
+            }
+        }
+
+        public void Hypercharge()
+        {
+            if (hyperchargeLevel < MaxHypercharge)
+            {
+                hyperchargeLevel++;
+                Console.WriteLine($"Hipercarga activada. Nivel actual: {hyperchargeLevel}");
+                if (hyperchargeLevel == MaxHypercharge)
+                {
+                    Console.WriteLine("Hipercarga máxima alcanzada. Shelly se vuelve extremadamente poderosa.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Hipercarga ya está en el nivel máximo.");
+            }
+        }
+
+        public void DisplayStatus()
+        {
+            Console.WriteLine($"Estado de Shelly -> Vida: {Health}, Munición: {ammo}, Escudo: {hasShield}, Curación: {hasHealing}, " +
+                              $"Recarga rápida: {fastReload}, Daño extra: {extraDamage}, Hipercarga: {hyperchargeLevel}, " +
+                              $"Refuerzos: [Velocidad: {speedBoost}, Daño: {damageBoost}, Salud: {healthBoost}, Recarga: {reloadBoost}, Escudo: {shieldBoost}]");
+        }
+    }
+}
